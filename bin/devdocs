@@ -53,7 +53,7 @@ open_doc() {
     if [[ "$file" != /* ]]; then
         file="$DOCS_DIR/$file"
     fi
-    
+
     if [ ! -f "$file" ]; then
         echo "Error: File not found: $file"
         exit 1
@@ -65,7 +65,7 @@ open_doc() {
 interactive_search() {
     local query="$1"
     local file
-    
+
     # Run search from DOCS_DIR so paths are relative
     pushd "$DOCS_DIR" >/dev/null
 
@@ -76,7 +76,7 @@ interactive_search() {
         selection=$(rg --line-number --no-heading --color=always --smart-case "$query" . | \
             fzf --ansi --delimiter : --preview "$PREVIEWER {1}" \
                 --preview-window 'right,50%,border-left')
-        
+
         if [ -n "$selection" ]; then
             file=$(echo "$selection" | cut -d: -f1)
         fi

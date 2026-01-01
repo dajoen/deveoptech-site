@@ -73,7 +73,7 @@ func teaHandler(s ssh.Session) (tea.Model, []tea.ProgramOption) {
 	if !active {
 		return nil, nil
 	}
-	
+
 	// Initialize model
 	m := initialModel(pty.Window.Width, pty.Window.Height)
 	return m, []tea.ProgramOption{tea.WithAltScreen()}
@@ -98,7 +98,7 @@ type model struct {
 
 func initialModel(w, h int) model {
 	items := loadDocs()
-	
+
 	l := list.New(items, list.NewDefaultDelegate(), 0, 0)
 	l.Title = "DevOpsTech Docs"
 	l.SetShowHelp(false)
@@ -142,7 +142,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
-		
+
 		// Layout: 30% list, 70% viewport
 		listWidth := int(float64(m.width) * 0.3)
 		if listWidth < 20 {
@@ -151,7 +151,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		viewportWidth := m.width - listWidth - 4 // margins
 
 		m.list.SetSize(listWidth, m.height-2)
-		
+
 		if !m.ready {
 			m.viewport = viewport.New(viewportWidth, m.height-2)
 			m.ready = true
@@ -175,7 +175,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		// List handles / and j/k.
 		// We need to handle viewport scrolling.
 		// Let's use Ctrl+j/k for viewport or PageUp/Down.
-		
+
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
@@ -226,7 +226,7 @@ func (m model) View() string {
 	if !m.ready {
 		return "Initializing..."
 	}
-	
+
 	listStyle := lipgloss.NewStyle().
 		Width(m.list.Width()).
 		Height(m.height).

@@ -9,6 +9,7 @@ My configuration for Arch Linux + Hyprland.
 ## Installation
 
 Pacman packages:
+
 - hyprland
 - waybar
 - kitty

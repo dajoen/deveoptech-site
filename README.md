@@ -26,6 +26,6 @@ See `Makefile` for commands.
 This project uses [pre-commit](https://pre-commit.com/) to ensure code quality.
 
 1. Install pre-commit: `pip install pre-commit` (or via brew/apt).
-2. Install hooks: `pre-commit install`.
-3. Run manually: `pre-commit run --all-files`.
-
+2. Install goimports: `go install golang.org/x/tools/cmd/goimports@latest` (ensure `$HOME/go/bin` is in your PATH).
+3. Install hooks: `pre-commit install`.
+4. Run manually: `pre-commit run --all-files`.

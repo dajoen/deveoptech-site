@@ -1,5 +1,5 @@
-
 <!-- BACKLOG.MD GUIDELINES START -->
+
 # Instructions for the usage of Backlog.md CLI Tool
 
 ## Backlog.md: Comprehensive Project Management Tool via CLI
@@ -137,7 +137,7 @@ Summary of what was done.
 ### How to Modify Each Section
 
 | What You Want to Change | CLI Command to Use                                       |
-|-------------------------|----------------------------------------------------------|
+| ----------------------- | -------------------------------------------------------- |
 | Title                   | `backlog task edit 42 -t "New Title"`                    |
 | Status                  | `backlog task edit 42 -s "In Progress"`                  |
 | Assignee                | `backlog task edit 42 -a @sara`                          |
@@ -149,7 +149,7 @@ Summary of what was done.
 | Remove AC #3            | `backlog task edit 42 --remove-ac 3`                     |
 | Add Plan                | `backlog task edit 42 --plan "1. Step one\n2. Step two"` |
 | Add Notes (replace)     | `backlog task edit 42 --notes "What I did"`              |
-| Append Notes            | `backlog task edit 42 --append-notes "Another note"` |
+| Append Notes            | `backlog task edit 42 --append-notes "Another note"`     |
 
 ---
 
@@ -253,8 +253,8 @@ Bad Example (Implementation Step):
 
 The very first things you must do when you take over a task are:
 
-* set the task in progress
-* assign it to yourself
+- set the task in progress
+- assign it to yourself
 
 ```bash
 # Example
@@ -266,7 +266,7 @@ backlog task edit 42 -s "In Progress" -a @{myself}
 Previously created tasks contain the why and the what. Once you are familiar with that part you should think about a
 plan on **HOW** to tackle the task and all its acceptance criteria. This is your **Implementation Plan**.
 First do a quick check to see if all the tools that you are planning to use are available in the environment you are
-working in.   
+working in.
 When you are ready, write it down in the task so that you can refer to it later.
 
 ```bash
@@ -391,6 +391,7 @@ backlog search "bug" --priority high --plain
 ```
 
 **Key points:**
+
 - Uses fuzzy matching - finds "authentication" when searching "auth"
 - Searches task titles, descriptions, and content
 - Also searches documents and decisions unless filtered with `--type task`
@@ -402,17 +403,17 @@ backlog search "bug" --priority high --plain
 
 ### Viewing and Finding Tasks
 
-| Task         | ✅ DO                        | ❌ DON'T                         |
-|--------------|-----------------------------|---------------------------------|
-| View task    | `backlog task 42 --plain`   | Open and read .md file directly |
-| List tasks   | `backlog task list --plain` | Browse backlog/tasks folder     |
-| Check status | `backlog task 42 --plain`   | Look at file content            |
-| Find by topic| `backlog search "auth" --plain` | Manually grep through files |
+| Task          | ✅ DO                           | ❌ DON'T                        |
+| ------------- | ------------------------------- | ------------------------------- |
+| View task     | `backlog task 42 --plain`       | Open and read .md file directly |
+| List tasks    | `backlog task list --plain`     | Browse backlog/tasks folder     |
+| Check status  | `backlog task 42 --plain`       | Look at file content            |
+| Find by topic | `backlog search "auth" --plain` | Manually grep through files     |
 
 ### Modifying Tasks
 
-| Task          | ✅ DO                                 | ❌ DON'T                           |
-|---------------|--------------------------------------|-----------------------------------|
+| Task          | ✅ DO                                | ❌ DON'T                          |
+| ------------- | ------------------------------------ | --------------------------------- |
 | Check AC      | `backlog task edit 42 --check-ac 1`  | Change `- [ ]` to `- [x]` in file |
 | Add notes     | `backlog task edit 42 --notes "..."` | Type notes into .md file          |
 | Change status | `backlog task edit 42 -s Done`       | Edit status in frontmatter        |
@@ -425,7 +426,7 @@ backlog search "bug" --priority high --plain
 ### Task Creation
 
 | Action           | Command                                                                             |
-|------------------|-------------------------------------------------------------------------------------|
+| ---------------- | ----------------------------------------------------------------------------------- |
 | Create task      | `backlog task create "Title"`                                                       |
 | With description | `backlog task create "Title" -d "Description"`                                      |
 | With AC          | `backlog task create "Title" --ac "Criterion 1" --ac "Criterion 2"`                 |
@@ -436,7 +437,7 @@ backlog search "bug" --priority high --plain
 ### Task Modification
 
 | Action           | Command                                     |
-|------------------|---------------------------------------------|
+| ---------------- | ------------------------------------------- |
 | Edit title       | `backlog task edit 42 -t "New Title"`       |
 | Edit description | `backlog task edit 42 -d "New description"` |
 | Change status    | `backlog task edit 42 -s "In Progress"`     |
@@ -447,7 +448,7 @@ backlog search "bug" --priority high --plain
 ### Acceptance Criteria Management
 
 | Action              | Command                                                                     |
-|---------------------|-----------------------------------------------------------------------------|
+| ------------------- | --------------------------------------------------------------------------- |
 | Add AC              | `backlog task edit 42 --ac "New criterion" --ac "Another"`                  |
 | Remove AC #2        | `backlog task edit 42 --remove-ac 2`                                        |
 | Remove multiple ACs | `backlog task edit 42 --remove-ac 2 --remove-ac 4`                          |
@@ -459,7 +460,7 @@ backlog search "bug" --priority high --plain
 ### Task Content
 
 | Action           | Command                                                  |
-|------------------|----------------------------------------------------------|
+| ---------------- | -------------------------------------------------------- |
 | Add plan         | `backlog task edit 42 --plan "1. Step one\n2. Step two"` |
 | Add notes        | `backlog task edit 42 --notes "Implementation details"`  |
 | Add dependencies | `backlog task edit 42 --dep task-1 --dep task-2`         |
@@ -499,23 +500,23 @@ Descriptions support literal newlines; shell examples may show escaped `\\n`, bu
 
 ### Task Operations
 
-| Action             | Command                                      |
-|--------------------|----------------------------------------------|
-| View task          | `backlog task 42 --plain`                    |
-| List tasks         | `backlog task list --plain`                  |
-| Search tasks       | `backlog search "topic" --plain`              |
+| Action             | Command                                         |
+| ------------------ | ----------------------------------------------- |
+| View task          | `backlog task 42 --plain`                       |
+| List tasks         | `backlog task list --plain`                     |
+| Search tasks       | `backlog search "topic" --plain`                |
 | Search with filter | `backlog search "api" --status "To Do" --plain` |
-| Filter by status   | `backlog task list -s "In Progress" --plain` |
-| Filter by assignee | `backlog task list -a @sara --plain`         |
-| Archive task       | `backlog task archive 42`                    |
-| Demote to draft    | `backlog task demote 42`                     |
+| Filter by status   | `backlog task list -s "In Progress" --plain`    |
+| Filter by assignee | `backlog task list -a @sara --plain`            |
+| Archive task       | `backlog task archive 42`                       |
+| Demote to draft    | `backlog task demote 42`                        |
 
 ---
 
 ## Common Issues
 
 | Problem              | Solution                                                           |
-|----------------------|--------------------------------------------------------------------|
+| -------------------- | ------------------------------------------------------------------ |
 | Task not found       | Check task ID with `backlog task list --plain`                     |
 | AC won't check       | Use correct index: `backlog task 42 --plain` to see AC numbers     |
 | Changes not saving   | Ensure you're using CLI, not editing files                         |

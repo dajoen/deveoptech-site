@@ -18,15 +18,18 @@
 1. Provision a VPS (e.g., DigitalOcean, Hetzner).
 2. DNS: Point `ssh.devopstech.site` (A record) to VPS IP.
 3. Copy binary and service file:
+
    ```bash
    # Build locally
    make ssh-build
-   
+
    # Copy to server
    scp ssh-tui/devdocs-ssh user@ssh.devopstech.site:/usr/local/bin/
    scp docs/ user@ssh.devopstech.site:/var/lib/devopstech/docs -r
    ```
+
 4. Systemd Service (`/etc/systemd/system/devdocs-ssh.service`):
+
    ```ini
    [Unit]
    Description=DevOpsTech SSH Docs
@@ -38,7 +41,7 @@
    ExecStart=/usr/local/bin/devdocs-ssh
    Environment="DOCS_DIR=/var/lib/devopstech/docs"
    Restart=always
-   
+
    # Hardening
    NoNewPrivileges=yes
    ProtectSystem=strict
@@ -48,6 +51,7 @@
    [Install]
    WantedBy=multi-user.target
    ```
+
 5. Enable and start:
    ```bash
    useradd -r -s /bin/false devdocs
@@ -58,8 +62,8 @@
 
 ## DNS Records
 
-| Type | Name | Content | Proxy Status |
-|------|------|---------|--------------|
-| A    | @    | (Cloudflare Pages IP) | Proxied |
-| CNAME| www  | devopstech.site | Proxied |
-| A    | ssh  | (VPS IP) | DNS Only |
+| Type  | Name | Content               | Proxy Status |
+| ----- | ---- | --------------------- | ------------ |
+| A     | @    | (Cloudflare Pages IP) | Proxied      |
+| CNAME | www  | devopstech.site       | Proxied      |
+| A     | ssh  | (VPS IP)              | DNS Only     |
