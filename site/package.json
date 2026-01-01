@@ -1,0 +1,21 @@
+{
+  "name": "devopstech-site",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "prebuild": "mkdir -p src/content && rm -rf src/content/docs && ln -s ../../docs src/content/docs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.21.0",
+    "astro": "^4.4.0",
+    "sharp": "^0.33.2"
+  },
+  "devDependencies": {
+    "pagefind": "^1.0.0"
+  }
+}

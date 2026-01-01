@@ -1,0 +1,117 @@
+#!/bin/bash
+
+# devdocs - CLI for devopstech.site
+
+set -e
+
+# Default docs dir to repo root/docs if not set
+# We try to find the repo root relative to this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+DOCS_DIR="${DOCS_DIR:-$REPO_ROOT/docs}"
+
+if [ ! -d "$DOCS_DIR" ]; then
+    echo "Error: Docs directory not found at $DOCS_DIR"
+    echo "Please set DOCS_DIR environment variable."
+    exit 1
+fi
+
+# Viewer selection
+if command -v glow >/dev/null 2>&1; then
+    VIEWER="glow -p"
+elif command -v mdcat >/dev/null 2>&1; then
+    VIEWER="mdcat"
+else
+    VIEWER="less"
+fi
+
+# Previewer for fzf
+if command -v bat >/dev/null 2>&1; then
+    PREVIEWER="bat --style=numbers --color=always"
+else
+    PREVIEWER="cat"
+fi
+
+usage() {
+    echo "Usage: devdocs [command] [args]"
+    echo ""
+    echo "Commands:"
+    echo "  search <query>   Search docs content using ripgrep + fzf"
+    echo "  open <path>      Open a specific doc file"
+    echo "  (no args)        Interactive file picker"
+    echo ""
+    echo "Environment:"
+    echo "  DOCS_DIR         Path to docs directory (default: $DOCS_DIR)"
+}
+
+open_doc() {
+    local file="$1"
+    if [ -z "$file" ]; then
+        return
+    fi
+    # If path is relative to docs dir, prepend it
+    if [[ "$file" != /* ]]; then
+        file="$DOCS_DIR/$file"
+    fi
+    
+    if [ ! -f "$file" ]; then
+        echo "Error: File not found: $file"
+        exit 1
+    fi
+
+    $VIEWER "$file"
+}
+
+interactive_search() {
+    local query="$1"
+    local file
+    
+    # Run search from DOCS_DIR so paths are relative
+    pushd "$DOCS_DIR" >/dev/null
+
+    if [ -n "$query" ]; then
+        # Search content with rg, then pipe to fzf
+        # rg output: file:line:content
+        local selection
+        selection=$(rg --line-number --no-heading --color=always --smart-case "$query" . | \
+            fzf --ansi --delimiter : --preview "$PREVIEWER {1}" \
+                --preview-window 'right,50%,border-left')
+        
+        if [ -n "$selection" ]; then
+            file=$(echo "$selection" | cut -d: -f1)
+        fi
+    else
+        # Just list files
+        # We list relative paths for cleaner UI
+        file=$(find . -name "*.md" | sed 's|^\./||' | \
+            fzf --preview "$PREVIEWER {}" --preview-window 'right,50%,border-left')
+    fi
+
+    popd >/dev/null
+
+    if [ -n "$file" ]; then
+        open_doc "$file"
+    fi
+}
+
+case "$1" in
+    search)
+        shift
+        interactive_search "$*"
+        ;;
+    open)
+        shift
+        open_doc "$1"
+        ;;
+    --help|-h)
+        usage
+        ;;
+    *)
+        if [ -n "$1" ]; then
+            # Assume search if args provided but not a command
+            interactive_search "$*"
+        else
+            interactive_search ""
+        fi
+        ;;
+esac
