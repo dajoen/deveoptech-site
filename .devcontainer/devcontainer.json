@@ -1,0 +1,35 @@
+{
+	"name": "DevOpsTech Arch",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"golang.go",
+				"astro-build.astro-vscode",
+				"esbenp.prettier-vscode",
+				"editorconfig.editorconfig",
+				"ms-azuretools.vscode-docker",
+				"charmbracelet.wish"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"go.toolsManagement.checkForUpdates": "local",
+				"go.useLanguageServer": true,
+				"gopls": {
+					"usePlaceholders": true
+				},
+				"editor.formatOnSave": true,
+				"[markdown]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode"
+				}
+			}
+		}
+	},
+	"remoteUser": "vscode",
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+	"postCreateCommand": "make setup && go install golang.org/x/tools/cmd/goimports@latest"
+}

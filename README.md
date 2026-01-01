@@ -29,3 +29,12 @@ This project uses [pre-commit](https://pre-commit.com/) to ensure code quality.
 2. Install goimports: `go install golang.org/x/tools/cmd/goimports@latest` (ensure `$HOME/go/bin` is in your PATH).
 3. Install hooks: `pre-commit install`.
 4. Run manually: `pre-commit run --all-files`.
+
+### Dev Container
+
+This project includes a `.devcontainer` configuration for VS Code.
+It provides an Arch Linux environment with all necessary tools (`go`, `node`, `pre-commit`, `rg`, `fzf`, `glow`).
+
+1. Open the project in VS Code.
+2. Click "Reopen in Container" when prompted.
+
